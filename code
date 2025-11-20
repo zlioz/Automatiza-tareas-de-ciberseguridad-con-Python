@@ -1,0 +1,28 @@
+import ipywidgets as widgets
+from IPython.display import display
+
+approved_users = ["elarson", "bmoreno", "sgilmore", "eraab", "gesparza"]
+approved_devices = ["8rp2k75", "h10s5o1", "4n482ts", "a307vir", "3rcv4w6"]
+
+user_input = widgets.Text(description="Usuario:")
+device_input = widgets.Text(description="Dispositivo:")
+output = widgets.Output()
+
+def verificar(b):
+    output.clear_output()
+    with output:
+        username = user_input.value.strip()
+        device_id = device_input.value.strip()
+        if username in approved_users:
+            ind = approved_users.index(username)
+            if device_id == approved_devices[ind]:
+                print(f"✅ El usuario {username} está aprobado. \n{device_id} es su dispositivo asignado.")
+            else:
+                print(f"⚠️ {device_id} no es el dispositivo asignado para {username}.")
+        else:
+            print(f"🚫 El usuario {username} no está aprobado para acceder al sistema.")
+
+boton = widgets.Button(description="Verificar acceso", button_style="primary")
+boton.on_click(verificar)
+
+display(user_input, device_input, boton, output)
